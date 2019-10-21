@@ -28,14 +28,14 @@ const buildItems = (dir, list) => {
     });
 };
 
-maybeCreateEmptyFolders = (list) => {
+const maybeCreateEmptyFolders = (list) => {
     list.forEach((item) => {
         const s = staging + WIN_SLASH + item;
         if(!fs.existsSync(s)) { fs.mkdir(s); }
     });
 };
 
-maybeMarkUnknownDirs = (list) => {
+const maybeMarkUnknownDirs = (list) => {
     list.forEach((item) => {
         const s = staging + WIN_SLASH + item;
         if(fs.existsSync(s)) { fs.writeFile(s + WIN_SLASH + UNKNOWN_FILE_NAME, UNKNOWN_FILE_NAME_CONTENT); }
@@ -54,7 +54,7 @@ const generateChangesList = (processList) => {
 };
 
 
-maybeCopyStageToMaster = (list) => {
+const maybeCopyStageToMaster = (list) => {
     list.forEach((item) => {
         const masterDir = master + WIN_SLASH + item;
         const stagingDir = staging + WIN_SLASH + item;
