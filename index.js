@@ -90,5 +90,4 @@ buildItems(master, masterList)
     .then(() => { return maybeMarkUnknownDirs(stagingList.filter(item => { return !masterList.includes(item)}))})
     .then(() => { return stagingList.filter(item => { return masterList.includes(item)})})
     .then((stagingList) => { return generateChangesList(stagingList)})
-    .then((changesList) => { return maybeCopyStageToMaster(changesList)})
-    .then(() => { console.log('were done')});
+    .then((changesList) => { return maybeCopyStageToMaster(changesList)});
