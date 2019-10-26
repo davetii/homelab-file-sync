@@ -4,7 +4,7 @@
   "description": "Project for syncing files in homelab",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -15,10 +15,11 @@
   "bugs": {
     "url": "https://github.com/davetii/homelab-file-sync/issues"
   },
-  "homepage": "https://github.com/davetii/homelab-file-sync#readme", 
+  "homepage": "https://github.com/davetii/homelab-file-sync#readme",
   "dependencies": {
     "fs-extra": "^8.1.0",
     "klaw": "^3.0.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "mocha": "^6.2.2"
   }
 }
