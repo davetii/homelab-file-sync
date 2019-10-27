@@ -4,6 +4,8 @@ const klaw = require('klaw');
 const hlfs = require('./homelab-file-sync-helper');
 
 const processedFiles= [];
+const masterList = [];
+const stagingList = [];
 
 const buildItems = (dir, list) => {
     return new Promise(function(resolve, reject) {
@@ -56,24 +58,24 @@ const maybeCopyStageToMaster = (list) => {
 
         filesToDelete.forEach((fileToDelete) => {
             const f = stagingDir + hlfs.WIN_SLASH + fileToDelete;
-            processedFiles.push(fileToDelete);+
+            processedFiles.push(fileToDelete);
             fs.unlink(f);
         });
         const filesToCopy  = stagingList.filter(x => { return !masterList.includes(x)});
+
         filesToCopy.forEach((fileToCopy) => {
             const src = hlfs.STAGING + hlfs.WIN_SLASH + item + hlfs.WIN_SLASH + fileToCopy;
             const dest =hlfs.MASTER + hlfs.WIN_SLASH + item + hlfs.WIN_SLASH + fileToCopy;
+            processedFiles.push(dest);
             fs.copyFile(src, dest, (err) => {
                 if (err) throw err;
-                processedFiles.push(dest);
                 fs.unlink(src);
             })
         });
     });
 };
 
-let masterList = [];
-let stagingList = [];
+
 
 exports.syncFiles = (callback) => {
     buildItems(hlfs.MASTER, masterList)

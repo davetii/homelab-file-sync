@@ -1,26 +1,32 @@
 const fileSync = require("./file-sync.js");
 const reportDups = require("./report-dups.js");
 const hlfs = require('./homelab-file-sync-helper');
-const details = [];
+const os = require('os');
+let report ='';
+
 
 const dupReportCallback = (data) => {
     if(data && data.length > 0) {
-        data.forEach((s) => { details.push("Duplicate file found in Master :" + s) });
+        data.forEach((s) => {
+            report += 'Duplicate file found in Master :' + s + os.EOL;
+        });
     } else {
-        details.push('no duplicate files found in master');
+        report += 'no duplicate files found in master' + os.EOL;
     }
-    details.push(hlfs.SEPERATOR);
-    hlfs.postReport(details);
+    report += hlfs.SEPERATOR + os.EOL;
+    hlfs.postReport(report);
 };
 
 const syncedFilesCallBack = (data) => {
-    details.push(hlfs.SEPERATOR);
-    details.push(hlfs.getHeader(new Date()));
     if (data && data.length > 0) {
-        data.forEach((s) => { details.push('file moved to master :' + s); });
+        data.forEach((s) => {
+            report += 'file moved to master :' + s + os.EOL;
+        });
     } else {
-        details.push('no files moved to master');
+        report += 'no files moved to master' + os.EOL;
     }
     reportDups.findDups(dupReportCallback);
 };
+report += hlfs.SEPERATOR + os.EOL;
+report += hlfs.getHeader(new Date()) + os.EOL;
 fileSync.syncFiles(syncedFilesCallBack);

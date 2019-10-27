@@ -10,7 +10,7 @@ const REPORT_FILE_NAME = 'file-sync-report.txt';
 const getReportFilePath = () => { return path.join(os.homedir(), 'Desktop') + WIN_SLASH + REPORT_FILE_NAME; };
 const getDateStamp = (date) => {
     return (date.getMonth() +1) + LNX_SLASH + date.getDate() + LNX_SLASH +
-        date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+        date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + "";
 };
 
 module.exports = {
@@ -31,15 +31,8 @@ module.exports = {
     getDateStamp : getDateStamp,
     postReport : (content) => {
         let file = getReportFilePath();
-
-        if (content && content.length > 0) {
-            content.forEach((s) => {
-                fs.appendFile(file, s + os.EOL, function (err) {
-                    if (err) throw err;
-                });
-            });
-            fs.appendFile(file, os.EOL, function (err) { if (err) throw err; });
-            fs.appendFile(file, os.EOL, function (err) { if (err) throw err; });
-        }
+        fs.appendFile(file, content + os.EOL, (err) => { if (err) throw err; });
+        fs.appendFile(file, os.EOL, function (err) { if (err) throw err; });
+        fs.appendFile(file, os.EOL, function (err) { if (err) throw err; });
     }
 };
